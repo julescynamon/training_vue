@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProductInterface } from "@/interface/product.interface";
+import type { ProductInterface } from "@/interface";
 import ShopProductList from "./ShopProductList.vue";
 
 defineProps<{

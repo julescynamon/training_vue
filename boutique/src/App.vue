@@ -4,32 +4,65 @@ import TheFooter from "./components/Footer.vue";
 import Shop from "./components/Shop/Shop.vue";
 import Cart from "./components/Cart/Cart.vue";
 import data from "./Data/product";
-
+import { computed } from "vue";
 import { reactive } from "vue";
-import type { ProductInterface } from "./interface/product.interface";
+import type {
+  ProductInterface,
+  ProductCartInterface,
+  FiltersInterface,
+} from "./interface";
+import { DEFAULT_FILTERS } from "./Data/filters";
 
 const state = reactive<{
   products: ProductInterface[];
-  cart: ProductInterface[];
+  cart: ProductCartInterface[];
+  filters: FiltersInterface;
 }>({
   products: data,
   cart: [],
+  filters: DEFAULT_FILTERS,
 });
 
 function addProductToCart(productId: number): void {
   const product = state.products.find((product) => product.id === productId);
-  if (product && !state.cart.find((product) => product.id === productId)) {
-    state.cart.push({ ...product });
+  if (product) {
+    const productInCart = state.cart.find(
+      (product) => product.id === productId
+    );
+    if (productInCart) {
+      productInCart.quantity++;
+    } else {
+      state.cart.push({
+        ...product,
+        quantity: 1,
+      });
+    }
   }
 }
 
 function removeProductFromCart(productId: number): void {
-  state.cart = state.cart.filter((product) => product.id !== productId);
+  const productFromCart = state.cart.find(
+    (product) => product.id === productId
+  );
+  if (productFromCart) {
+    if (productFromCart.quantity === 1) {
+      state.cart = state.cart.filter((product) => product.id !== productId);
+    } else {
+      productFromCart.quantity--;
+    }
+  }
 }
+
+const cartEmpty = computed(() => state.cart.length === 0);
 </script>
 
 <template>
-  <div class="app-container">
+  <div
+    class="app-container"
+    :class="{
+      gridEmpty: cartEmpty,
+    }"
+  >
     <TheHeader class="header" />
     <Shop
       :products="state.products"
@@ -37,6 +70,7 @@ function removeProductFromCart(productId: number): void {
       class="shop"
     />
     <Cart
+      v-if="!cartEmpty"
       :cart="state.cart"
       class="cart"
       @remove-product-from-cart="removeProductFromCart"
@@ -56,6 +90,12 @@ function removeProductFromCart(productId: number): void {
   grid-template-columns: 75% 25%;
   grid-template-rows: 48px auto 48px;
 }
+
+.gridEmpty {
+  grid-template-areas: "header" "shop" "footer";
+  grid-template-columns: 100%;
+}
+
 .header {
   grid-area: header;
 }
