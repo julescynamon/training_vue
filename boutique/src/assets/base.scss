@@ -103,8 +103,16 @@ body {
     margin: 10px;
 }
 
+.mb-5 {
+    margin-bottom: 5px;
+}
+
 .mb-10 {
     margin-bottom: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
 }
 
 .mr-10 {
@@ -151,4 +159,12 @@ body {
     &:hover {
         background-color: var(--success-2);
     }
+}
+
+// input
+
+input {
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: 8px 15px;
 }

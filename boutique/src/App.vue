@@ -97,6 +97,7 @@ function updateFilter(filterUpdate: FilterUpdate) {
     <TheHeader class="header" />
     <Shop
       @update-filter="updateFilter"
+      :filters="state.filters"
       :products="firlteredProduct"
       @add-product-to-cart="addProductToCart"
       class="shop"
