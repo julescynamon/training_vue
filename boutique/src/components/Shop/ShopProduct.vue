@@ -20,7 +20,7 @@ const emit = defineEmits<{
       <h4>{{ product.title }}</h4>
       <p>{{ product.description }}</p>
       <div class="d-flex flex-row align-items-center">
-        <strong class="flex-fill">Prix : {{ product.price }}</strong>
+        <strong class="flex-fill">Prix : {{ product.price }}€</strong>
         <button
           class="btn btn-primary"
           @click="emit('addProductToCart', product.id)"

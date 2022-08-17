@@ -1,54 +1,51 @@
 <script setup lang="ts">
-import type {
-  FiltersInterface,
-  FilterUpdate,
-  ProductInterface,
-} from "@/interface";
-
+import type { FiltersInterface, FilterUpdate } from "@/interface";
 defineProps<{
   filters: FiltersInterface;
 }>();
-
 const emit = defineEmits<{
-  (e: "updateFilter", updateFilter: FilterUpdate): void;
+  (e: "updateFilter", filterUpdate: FilterUpdate): void;
 }>();
 </script>
 
 <template>
-  <div class="p-20">
+  <div class="p-20 d-flex flex-column">
     <section class="mb-20">
       <h3 class="mb-10">Rechercher</h3>
       <input
-        type="text"
-        placeholder="Rechercher"
         :value="filters.search"
         @input="
           emit('updateFilter', {
             search: ($event.target as HTMLInputElement).value,
           })
         "
+        type="text"
+        placeholder="Rechercher"
       />
     </section>
     <section class="mb-20">
-      <div class="mb-5">
-        <input type="radio" name="priceRange" id="0-10000" />
-        <label for="0-10000"></label>
-      </div>
-      <div class="mb-5">
-        <input type="radio" name="priceRange" id="800-1000" />
-        <label for="800-1000"></label>
-      </div>
-      <div class="mb-5">
-        <input type="radio" name="priceRange" id="1000-1500" />
-        <label for="1000-1500"></label>
-      </div>
-      <div class="mb-5">
-        <input type="radio" name="priceRange" id="1500-2000" />
-        <label for="1500-2000"></label>
-      </div>
-      <div class="mb-5">
-        <input type="radio" name="priceRange" id="2000-10000" />
-        <label for="2000-10000"></label>
+      <h3 class="mb-10">Trier par prix</h3>
+      <div
+        class="mb-5"
+        v-for="priceRange of ([[0, 10000], [800, 1000], [1000, 1500], [1500, 2000], [2000, 10000]] as [number, number][])"
+        :key="priceRange[0]"
+      >
+        <input
+          :checked="filters.priceRange[0] === priceRange[0]"
+          type="radio"
+          @input="emit('updateFilter', { priceRange })"
+          name="priceRange"
+          :id="priceRange[0].toString()"
+        />
+        <label :for="priceRange[0].toString()">
+          {{
+            priceRange[0] === 0
+              ? "Tous les prix"
+              : priceRange[0] === 2000
+              ? "Plus de 2000€"
+              : `Entre ${priceRange[0]}€ et ${priceRange[1]}€`
+          }}
+        </label>
       </div>
     </section>
   </div>
