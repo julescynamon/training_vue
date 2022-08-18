@@ -1,4 +1,5 @@
-import type { Category } from "./filters.interface";
+import type { Category } from "./type";
+
 
 export interface ProductInterface {
   id: number;

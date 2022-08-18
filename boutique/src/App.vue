@@ -2,13 +2,31 @@
 import TheHeader from "./components/Header.vue";
 import TheFooter from "./components/Footer.vue";
 import Boutique from "./features/boutique/Boutique.vue";
+import Admin from "./features/admin/Admin.vue";
+import { reactive, type Component as C } from "vue";
+import type { Page } from "./interface";
+
+const state = reactive<{
+  page: Page;
+}>({
+  page: "Boutique",
+});
+
+const pages: { [s: string]: C } = {
+  Boutique,
+  Admin,
+};
+
+function navigate(page: Page): void {
+  state.page = page;
+}
 </script>
 
 <template>
   <div class="app-container">
-    <TheHeader class="header" />
+    <TheHeader @navigate="navigate" :page="state.page" class="header" />
     <div class="app-content">
-      <Component :is="Boutique" />
+      <Component :is="pages[state.page]" />
     </div>
     <TheFooter class="footer" />
   </div>

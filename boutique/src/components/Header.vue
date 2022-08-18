@@ -1,4 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { Page } from "@/interface";
+
+defineProps<{
+  page: Page;
+}>();
+
+const emit = defineEmits<{
+  (e: "navigate", page: Page): void;
+}>();
+</script>
 
 <template>
   <header class="px-20 d-flex flex-row align-items-center">
@@ -8,10 +18,18 @@
     </a>
     <ul class="d-flex flex-row flex-fill">
       <li class="mr-10">
-        <a href="#">Boutique</a>
+        <a
+          :class="{ active: page === 'Boutique' }"
+          @click="emit('navigate', 'Boutique')"
+          >Boutique</a
+        >
       </li>
       <li>
-        <a href="#">Admin</a>
+        <a
+          :class="{ active: page === 'Admin' }"
+          @click="emit('navigate', 'Admin')"
+          >Admin</a
+        >
       </li>
     </ul>
     <ul class="d-flex flex-row">
@@ -30,6 +48,7 @@ header {
   background-color: var(--primary-1);
   a {
     color: var(--text-primary-color);
+    cursor: pointer;
     img {
       width: 20px;
       margin-right: 5px;
@@ -38,6 +57,10 @@ header {
       font-weight: 700;
       font-size: 20px;
     }
+  }
+
+  a.active {
+    text-decoration: underline;
   }
 }
 </style>
