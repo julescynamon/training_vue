@@ -5,6 +5,7 @@ import Boutique from "./features/boutique/Boutique.vue";
 import Admin from "./features/admin/Admin.vue";
 import { reactive, type Component as C } from "vue";
 import type { Page } from "./interface";
+// import { seed } from "./Data/seeds";
 
 const state = reactive<{
   page: Page;
@@ -20,13 +21,17 @@ const pages: { [s: string]: C } = {
 function navigate(page: Page): void {
   state.page = page;
 }
+
+// seed('projetProduct');
 </script>
 
 <template>
   <div class="app-container">
     <TheHeader @navigate="navigate" :page="state.page" class="header" />
     <div class="app-content">
-      <Component :is="pages[state.page]" />
+      <Suspense>
+        <Component :is="pages[state.page]" />
+      </Suspense>
     </div>
     <TheFooter class="footer" />
   </div>

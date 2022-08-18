@@ -6,7 +6,7 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "addProductToCart", productId: number): void;
+  (e: "addProductToCart", productId: string): void;
 }>();
 </script>
 
@@ -23,7 +23,7 @@ const emit = defineEmits<{
         <strong class="flex-fill">Prix : {{ product.price }}€</strong>
         <button
           class="btn btn-primary"
-          @click="emit('addProductToCart', product.id)"
+          @click="emit('addProductToCart', product._id)"
         >
           Ajouter au panier
         </button>
