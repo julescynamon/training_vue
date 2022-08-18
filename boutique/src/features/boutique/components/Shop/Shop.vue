@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type {
   FiltersInterface,
-  FilterUpdate,
   ProductInterface,
+  FilterUpdate,
 } from "@/interface";
 import ShopProductList from "./ShopProductList.vue";
 import ShopFilters from "./ShopFilters.vue";
@@ -21,21 +21,26 @@ const emit = defineEmits<{
 <template>
   <div class="d-flex flex-row">
     <ShopFilters
-      :nbr-of-products="products.length"
       :filters="filters"
+      :nbr-of-products="products.length"
       @update-filter="emit('updateFilter', $event)"
-      class="shop-filters"
+      class="shop-filter"
     />
     <ShopProductList
-      class="flex-fill"
-      :products="products"
+      class="flex-fill scrollable"
       @add-product-to-cart="emit('addProductToCart', $event)"
+      :products="products"
     />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.shop-filters {
+.scrollable {
+  overflow-y: auto;
+  height: calc(100vh - 96px);
+}
+
+.shop-filter {
   flex: 0 0 200px;
 }
 </style>
