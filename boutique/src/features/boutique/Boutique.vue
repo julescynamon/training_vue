@@ -21,7 +21,9 @@ const state = reactive<{
   filters: { ...DEFAULT_FILTERS },
 });
 
-const products = await (await fetch("https://restapi.fr/api/projetProduct")).json();
+const products = await (
+  await fetch("https://restapi.fr/api/vueProjetProduct")
+).json();
 if (Array.isArray(products)) {
   state.products = products;
 } else {

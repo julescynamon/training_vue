@@ -5,6 +5,7 @@ import Boutique from "./features/boutique/Boutique.vue";
 import Admin from "./features/admin/Admin.vue";
 import { reactive, type Component as C } from "vue";
 import type { Page } from "./interface";
+// import { seed40Articles } from "./Data/seeds";
 // import { seed } from "./Data/seeds";
 
 const state = reactive<{
@@ -22,7 +23,9 @@ function navigate(page: Page): void {
   state.page = page;
 }
 
-// seed('projetProduct');
+// seed("vueProjetProduct");
+// seed40Articles("vueProjetProduct");
+
 </script>
 
 <template>
