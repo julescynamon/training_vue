@@ -1,10 +1,9 @@
 import type { Category } from "./type";
 
-
 export interface FiltersInterface {
     search: string;
     priceRange: [number, number];
-    category: Category;
+    category: Category
 }
 
 export interface FilterUpdate {
