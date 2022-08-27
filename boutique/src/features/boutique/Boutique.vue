@@ -12,13 +12,19 @@ import type {
 import { DEFAULT_FILTERS } from "../../features/boutique/data/filters";
 
 const state = reactive<{
-  products: ProductInterface[];
-  cart: ProductCartInterface[];
-  filters: FiltersInterface;
+  products: ProductInterface[],
+  cart: ProductCartInterface[],
+  filters: FiltersInterface,
+  page: number,
+  isLoaging: boolean,
+  moreResults: boolean,
 }>({
   products: [],
   cart: [],
   filters: { ...DEFAULT_FILTERS },
+  page: 1,
+  isLoaging: true,
+  moreResults: true,
 });
 
 const products = await (
@@ -100,6 +106,7 @@ function updateFilter(filterUpdate: FilterUpdate) {
       :filters="state.filters"
       :products="firlteredProduct"
       @add-product-to-cart="addProductToCart"
+      @inc-page="incPage"
       class="shop"
     />
     <Cart
